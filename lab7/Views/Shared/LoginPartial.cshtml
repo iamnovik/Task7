@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity;
+@using lab7.Models
+@inject SignInManager<Contact> signInManager
+
+
+<ul class="navbar-nav">
+    @if (signInManager.IsSignedIn(User))
+    {
+        var contact = await signInManager.UserManager.GetUserAsync(User);
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AddressBook" asp-action="Index">@(contact.FullName)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>

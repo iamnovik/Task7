@@ -1,0 +1,69 @@
+﻿@using lab7.Services.implementations
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<ContactViewModel>
+
+<h1 style="text-align:center;">@ViewBag.Title</h1>
+
+@if (ViewBag.IsSearch)
+{
+    <p>
+        <a asp-controller="AddressBook" asp-action="Index">Back to Address Book</a>
+    </p>
+}
+
+<div>
+    <form asp-controller="AddressBook" asp-action="Index" method="get">
+        <div class="form-group">
+            <label for="searchName">Search by Name:</label>
+            <input type="text" class="form-control" id="searchName" name="searchName" value="@ViewBag.SearchName">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+<table class="table">
+    <tbody>
+    <div class="row">
+        @if (Model.Count == 0)
+        {
+            <h2 >No contacts were found</h2>               
+        }
+        @foreach (var contact in Model)
+        {
+            <div class="col-sm-4">
+                <a href="@Url.Action("Index", "Chat", new { contactId = contact.Contact.Id })" style="text-decoration: none; color: inherit;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title">@contact.Contact.FullName</h5>
+                                    <p class="card-text">@contact.Contact.Email</p>
+                                </div>
+                                <div class="col">
+                                    @if (@contact.IsInAddressBook)
+                                    {
+                                        <form asp-controller="AddressBook" asp-action="RemoveContact" method="post">
+                                            <input type="hidden" name="contactId" value="@contact.Contact.Id"/>
+                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="AddressBook" asp-action="AddContact" method="post">
+                                            <input type="hidden" name="contactId" value="@contact.Contact.Id"/>
+                                            <button type="submit" class="btn btn-success">Add</button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+
+
+
+
+    </tbody>
+</table>

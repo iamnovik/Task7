@@ -1,0 +1,84 @@
+﻿@model List<Message>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+
+
+    <style>
+      
+        .header{
+        text-align: center;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        white-space: nowrap;
+      }
+         #sendForm {
+                position: sticky;
+                bottom: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                background-color: white;
+                padding: 10px;
+
+            }
+        #sender {
+            margin-left: auto;
+            background-color: #d1e7dd;
+            max-width: 60%;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        #receiver {
+            margin-right: auto;
+            background-color: #e2eafc;
+            max-width: 60%;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        #messageInput {
+            resize: vertical;
+        }
+        #messagesList li {
+            word-wrap: break-word; /* или overflow-wrap: break-word; */
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>@ViewBag.ContactName <i class="fas fa-phone"></i></h1>
+</div>
+<ul id="messagesList">
+    @foreach (var message in Model)
+    {
+        var messageClass = message.SenderId == ViewBag.CurrentUserId ? "sender" : "receiver";
+        <li id="@messageClass" data-message-id="@message.Id" style="position: relative;">
+                <span>@message.Text</span>
+                @if (message.SenderId == ViewBag.CurrentUserId)
+                {
+                    <button class="edit-button" style="position: absolute; top: 0; right: 0;">
+                        <i class="fas fa-edit"></i> <!-- Иконка редактирования -->
+                    </button>
+
+                }
+            </li>
+    }
+</ul>
+<form id="sendForm">
+    <input type="hidden" id="currentUserId" value="@ViewBag.CurrentUserId"/>
+    <input type="hidden" id="contactId" value="@ViewBag.ContactId"/>
+    <textarea id="messageInput" rows="2" style="width: 60%;"></textarea> <!-- Здесь указано rows="4", чтобы поле имело начальную высоту 4 строк -->
+    <button type="submit">Send</button>
+</form>
+</body>
+</html>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script src="~/js/chat.js"></script>
+}
