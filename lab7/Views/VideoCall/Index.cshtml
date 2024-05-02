@@ -64,7 +64,15 @@
             var chatId = document.getElementById("chatId").value; 
             console.log("Group" + chatId)// Получение tableId из модели
             connection.invoke("JoinChatGroup", chatId).catch(err => console.error(err.toString()));
-           
+            pc.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        let chatId = document.getElementById("chatId").value;
+                        console.log("Candidate "+chatId)
+                        var str = JSON.stringify(event.candidate) ;
+                        connection.invoke("Send", { message: str, id: chatId }).catch(err => console.error(err.toString()));
+                        messages = [];
+                    }
+                };
         
         
         // Send any ICE candidates to the other peer
@@ -73,14 +81,7 @@
         }).catch(err => console.error(err.toString()));
         let pc = new RTCPeerConnection();
         
-        pc.onicecandidate = (event) => {
-            if (event.candidate) {
-                let chatId = document.getElementById("chatId").value;
-                console.log("Candidate "+chatId)
-                var str = JSON.stringify(event.candidate) ;
-                connection.invoke("Send", { message: str, id: "1" }).catch(err => console.error(err.toString()));
-            }
-        };
+
         
         
         // Let's say we have a video element with the id "remoteVideo" for displaying the remote video stream
