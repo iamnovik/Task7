@@ -13,7 +13,7 @@ public class WebRTCHub : Hub
     public async Task Send(Data data)
     {
         System.Console.WriteLine(data.id +" send");
-        await Clients.Group(data.id).SendAsync("Receive", data.message);
+        await Clients.Group(data.id).SendAsync("Receive", data);
        // await Clients.Group(data.id).SendAsync("ReceiveMessage", data.message);
     }
 
@@ -32,5 +32,7 @@ public class WebRTCHub : Hub
 public class Data
 {
     public string id { get; set; }
+    
+    public string senderid { get; set; }
     public string message { get; set; }
 }

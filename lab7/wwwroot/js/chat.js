@@ -63,7 +63,8 @@ connection.start().catch(function (err) {
 
 document.querySelector('.header i.fa-phone').addEventListener('click', function() {
     var chatId = parseInt(document.getElementById("chatId").value);
-    window.location.href = '/VideoCall/Index?chatId=' + chatId;
+    var senderId = document.getElementById("currentUserId").value;
+    window.location.href = '/VideoCall/Index?chatId=' + chatId + '&senderId=' + senderId;
 });
 
 document.getElementById("sendForm").addEventListener("submit", function (event) {

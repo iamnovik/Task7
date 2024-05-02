@@ -22,7 +22,8 @@
     </style>
 </head>
 <body>
-    <input id="chatId" value="@ViewBag.ChatId"/>
+<input id="chatId" value="@ViewBag.ChatId"/>
+<input id="senderId" value="@ViewBag.SenderId"/>
 <video id="localVideo" autoplay muted></video>
 <video id="remoteVideo" autoplay></video>
 <div class="controls">
@@ -35,7 +36,9 @@
         
         let messages = []
         connection.on("Receive",  (message) =>{
-            let msg = JSON.parse(message);
+            var senderId = document.getElementById("senderId").value;
+            if (message.senderid !== senderId){
+            let msg = JSON.parse(message.message);
             console.log("RECEIVE")
             // Если это SDP
             if (msg.type === 'offer' || msg.type === 'answer') {
@@ -46,8 +49,9 @@
                             pc.createAnswer().then((answer) => {
                                 pc.setLocalDescription(answer);
                                 var chatId = document.getElementById("chatId").value;
+                                var senderId = document.getElementById("senderId").value;
                                 var str = JSON.stringify(answer) ;
-                                connection.invoke("Send",{id: chatId, message: JSON.stringify(answer)} );
+                                connection.invoke("Send",{id: chatId, senderId:senderId ,message: JSON.stringify(answer)} );
                                 messages = [];
                              });
                         }
@@ -56,6 +60,7 @@
             // Если это ICE кандидат
             else if (msg.candidate) {
                 pc.addIceCandidate(new RTCIceCandidate(msg.candidate));
+            }
             }
         });
         
@@ -74,7 +79,9 @@
                     }
                 };*/
             pc.onicecandidate = ({candidate}) => {
-                connection.invoke("Send", { message: JSON.stringify({ candidate }), id: chatId }).catch(err => console.error(err.toString()));
+                                                var senderId = document.getElementById("senderId").value;
+
+                connection.invoke("Send", { message: JSON.stringify({ candidate }), senderId:senderId, id: chatId }).catch(err => console.error(err.toString()));
   
             };
         
@@ -111,8 +118,9 @@
                 console.log("Create offer")
                 pc.createOffer().then((offer) => {
                                             pc.setLocalDescription(offer);
-                                            var str = JSON.stringify(offer) ;
-                                            connection.invoke("Send",{id: chatId, message: JSON.stringify(offer)});
+                                                                            var senderId = document.getElementById("senderId").value;
+
+                                            connection.invoke("Send",{id: chatId, message: JSON.stringify(offer), senderId:senderId});
                                             messages = [];
                                         });
                 // Create and send an offer to the other peer
