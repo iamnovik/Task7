@@ -10,12 +10,12 @@ public class WebRTCHub : Hub
         await Clients.Others.SendAsync("Receive", message);
     }
     
-    public async Task Send(Data data)
+    /*public async Task Send(Data data)
     {
         System.Console.WriteLine(data.id +" send");
         await Clients.Others.SendAsync("ReceiveMessage", data.message);
        // await Clients.Group(data.id).SendAsync("ReceiveMessage", data.message);
-    }
+    }*/
 
     public async Task JoinChatGroup(string chatId)
     {
