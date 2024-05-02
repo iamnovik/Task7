@@ -6,7 +6,7 @@ var currentUserId;
 connection.on("ReceiveMessage", function (message) {
     console.log(message)
     var li = document.createElement("li");
-    li.setAttribute("id", message.senderId === currentUserId ? "sender" : "receiver");
+    li.setAttribute("id", message.senderId=== currentUserId ? "sender" : "receiver");
     li.setAttribute("data-message-id", message.id); // Добавляем атрибут data-message-id для идентификации сообщения
     li.style.position = "relative";
     var span = document.createElement("span");
@@ -50,7 +50,7 @@ connection.on("ReceiveMessage", function (message) {
     messagesList.appendChild(li);
 
     window.scrollTo(0, document.body.scrollHeight);
-
+    
 });
 
 window.onload = function() {
@@ -70,7 +70,8 @@ document.getElementById("sendForm").addEventListener("submit", function (event) 
     currentUserId = senderId;
     var receiverId = document.getElementById("contactId").value;
     var text = document.getElementById("messageInput").value;
-    var message = { senderId: senderId, receiverId: receiverId, text: text };
+    var chatId = parseInt(document.getElementById("chatId").value);
+    var message = { chatId : chatId, text: text, senderId: senderId };
     connection.invoke("SendMessage", message).catch(function (err) {
         return console.error(err.toString());
     });
@@ -85,7 +86,7 @@ document.querySelectorAll('.edit-button').forEach(function(button) {
 
         var currentText = messageTextElement.textContent; // Получаем текущий текст сообщения
         var newText = prompt('Enter new message:', currentText); // Запрашиваем новый текст у пользователя через диалоговое окно
-
+        
         // Если пользователь ввел новый текст, обновляем текст сообщения
         if (newText !== null && newText.trim() !== '') {
             messageTextElement.textContent = newText;

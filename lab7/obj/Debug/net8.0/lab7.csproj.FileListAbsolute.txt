@@ -140,3 +140,4 @@ D:\Универ\6 sem\СПП\lab7\lab7\bin\Debug\net8.0\Npgsql.dll
 D:\Универ\6 sem\СПП\lab7\lab7\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 D:\Универ\6 sem\СПП\lab7\lab7\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 D:\Универ\6 sem\СПП\lab7\lab7\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Универ\6 sem\СПП\lab7\lab7\obj\Debug\net8.0\lab7.sourcelink.json

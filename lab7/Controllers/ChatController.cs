@@ -20,16 +20,36 @@ public class ChatController : Controller
     public async Task<IActionResult> Index(string contactId)
     {
         var user = await userManager.GetUserAsync(User);
-        var messages = await dbContext.Messages
-            .Where(m => (m.SenderId == user.Id && m.ReceiverId == contactId) || (m.SenderId == contactId && m.ReceiverId == user.Id))
-            .OrderBy(m => m.Timestamp)
-            .ToListAsync();
+        var contact = await userManager.FindByIdAsync(contactId);
+            
+        if (contact == null)
+            return NotFound("Contact not found.");
+
+        // Проверяем, существует ли уже чат между текущим пользователем и контактом
+        var existingChat = await dbContext.Chats
+            .Include(c => c.Messages)
+            .FirstOrDefaultAsync(c =>(c.SenderId == user.Id  && c.ReceiverId == contactId)|| (c.SenderId == contactId && c.ReceiverId == user.Id));
+
+        if (existingChat == null)
+        {
+            // Если чата между пользователями нет, создаем новый чат
+            var newChat = new Chat
+            {
+                SenderId = user.Id,
+                ReceiverId = contactId,
+            };
+
+            dbContext.Chats.Add(newChat);
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index), new { contactId });
+        }
 
         ViewBag.CurrentUserId = user.Id;
         ViewBag.ContactId = contactId;
-        var receiver = await userManager.FindByIdAsync(contactId);
-        ViewBag.ContactName = receiver.FullName;
-        return View(messages);
+        ViewBag.ChatId = existingChat.Id;
+        ViewBag.ContactName = contact.FullName;
+        return View(existingChat.Messages.ToList());
     }
     
     [HttpPost]

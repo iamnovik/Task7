@@ -14,6 +14,7 @@ public class AppDbContext : IdentityDbContext<Contact>
 
     public DbSet<ContactRelationship> ContactRelationships { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Chat> Chats { get; set; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -32,5 +33,7 @@ public class AppDbContext : IdentityDbContext<Contact>
             .WithMany()
             .HasForeignKey(c => c.TargetContactId)
             .OnDelete(DeleteBehavior.Restrict);
+
+            
     }
 }
