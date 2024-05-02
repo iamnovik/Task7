@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <input type="hidden" id="chatId" value="@ViewBag.ChatId"/>
+    <input id="chatId" value="@ViewBag.ChatId"/>
 <video id="localVideo" autoplay muted></video>
 <video id="remoteVideo" autoplay></video>
 <div class="controls">
@@ -34,7 +34,7 @@
         let connection = new signalR.HubConnectionBuilder().withUrl("/webrtcHub").build();
         
         let messages = []
-        connection.on("Receive", function (message){
+        connection.on("Receive",  (message) =>{
             let msg = JSON.parse(message);
             console.log("RECEIVE")
             // Если это SDP
@@ -79,7 +79,6 @@
                 console.log("Candidate "+chatId)
                 var str = JSON.stringify(event.candidate) ;
                 connection.invoke("Send", { message: str, id: "1" }).catch(err => console.error(err.toString()));
-                messages = [];
             }
         };
         
@@ -91,7 +90,7 @@
             // Set the source of the video element to the stream received from the other peer
             remoteVideo.srcObject = event.streams[0];
         };
-        
+           
         // Получаем локальный медиапоток
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then(stream => {
@@ -106,14 +105,14 @@
                 });
         
                 console.log("Create offer")
-                
-                // Create and send an offer to the other peer
                 pc.createOffer().then((offer) => {
-                    pc.setLocalDescription(offer);
-                    var str = JSON.stringify(offer) ;
-                    connection.invoke("Send",{id: chatId, message: str});
-                    messages = [];
-                });
+                                            pc.setLocalDescription(offer);
+                                            var str = JSON.stringify(offer) ;
+                                            connection.invoke("Send",{id: chatId, message: str});
+                                            messages = [];
+                                        });
+                // Create and send an offer to the other peer
+             
         
                 document.getElementById('toggleVideo').addEventListener('click', () => {
                     localStream.getVideoTracks()[0].enabled = !localStream.getVideoTracks()[0].enabled;

@@ -57,10 +57,10 @@
 <ul id="messagesList">
     @foreach (var message in Model)
     {
-        var messageClass = message.Chat.SenderId == ViewBag.CurrentUserId ? "sender" : "receiver";
+        var messageClass = message.SenderId == ViewBag.CurrentUserId ? "sender" : "receiver";
         <li id="@messageClass" data-message-id="@message.Id" style="position: relative;">
                 <span>@message.Text</span>
-                @if (message.Chat.SenderId == ViewBag.CurrentUserId)
+                @if (message.SenderId == ViewBag.CurrentUserId)
                 {
                     <button class="edit-button" style="position: absolute; top: 0; right: 0;">
                         <i class="fas fa-edit"></i> <!-- Иконка редактирования -->
