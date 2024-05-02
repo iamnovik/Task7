@@ -4,8 +4,9 @@ namespace lab7.Controllers;
 
 public class VideoCallController : Controller
 {
-    public IActionResult Index()
+    public IActionResult Index(string chatId)
     {
+        ViewBag.ChatId = chatId;
         return View();
     }
 
