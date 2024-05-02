@@ -52,7 +52,8 @@
 </head>
 <body>
 <div class="header">
-    <h1>@ViewBag.ContactName <i class="fas fa-phone"></i></h1>
+       <a href="@Url.Action("Index", "VideoCall", new { chatId = ViewBag.ChatId })" class="fas fa-phone"></a>
+    <h1>@ViewBag.ContactName</h1>
 </div>
 <ul id="messagesList">
     @foreach (var message in Model)
