@@ -7,9 +7,55 @@
 @if (ViewBag.IsSearch)
 {
     <p>
-        <a asp-controller="AddressBook" asp-action="Index">Back to Address Book</a>
+        <a asp-controller="AddressBook" asp-action="Index" class="back-link">Back to Address Book</a>
     </p>
 }
+
+<style>
+    .back-link {
+        color: #0077cc; /* Цвет ссылки */
+        text-decoration: none; /* Убираем подчеркивание */
+        font-size: 1.2em; /* Увеличиваем размер шрифта */
+        padding: 10px; /* Добавляем отступы вокруг текста */
+        border: 1px solid #0077cc; /* Добавляем границу вокруг ссылки */
+        border-radius: 5px; /* Скругляем углы границы */
+    }
+
+    .back-link:hover {
+        background-color: #0077cc; /* Меняем цвет фона при наведении */
+        color: white; /* Меняем цвет текста при наведении */
+    }
+    
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+    
+        .form-group {
+            margin: 20px 0;
+        }
+    
+        .table {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .card {
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .card-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        .btn-danger, .btn-success {
+            width: 100px;
+        }
+    
+</style>
+
 
 <div>
     <form asp-controller="AddressBook" asp-action="Index" method="get">
@@ -17,7 +63,7 @@
             <label for="searchName">Search by Name:</label>
             <input type="text" class="form-control" id="searchName" name="searchName" value="@ViewBag.SearchName">
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Search</button>
     </form>
 </div>
 <table class="table">

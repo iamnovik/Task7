@@ -5,30 +5,43 @@
     <title>WebRTC Video Call</title>
     <style>
          #localVideo, #remoteVideo {
-                   width: 480px;
-                   height: 360px;
-                   border: 1px solid #ccc;
-                   display: block;
-                   margin: 0 auto;
-               }
-               .controls {
-                   display: flex;
-                   justify-content: center;
-                   margin-top: 10px;
-               }
-               .controls button {
-                   margin: 0 10px;
-               }
+             width: 480px;
+             height: 360px;
+             border: 1px solid #ccc;
+             display: block;
+             margin: 0 auto;
+         }
+         
+         .controls {
+             display: flex;
+             justify-content: center;
+             margin-top: 10px;
+         }
+         
+         .controls button {
+             margin: 0 10px;
+         }
+         
+         #toggleVideo, #toggleAudio {
+             background-color: transparent;
+             border: none;
+             cursor: pointer;
+             font-size: 24px;
+         }
+         
+         #toggleVideo:hover, #toggleAudio:hover {
+             color: #333; /* Цвет иконки при наведении */
+         }
     </style>
 </head>
 <body>
-<input id="chatId" value="@ViewBag.ChatId"/>
-<input id="senderId" value="@ViewBag.SenderId"/>
-<video id="localVideo" autoplay muted></video>
-<video id="remoteVideo" autoplay></video>
+<input type="hidden" id="chatId" value="@ViewBag.ChatId"/>
+<input type="hidden" id="senderId" value="@ViewBag.SenderId"/>
+<video id="localVideo" autoplay muted poster="~/images/wait.jpg"></video>
+<video id="remoteVideo" autoplay poster="~/images/wait.jpg"></video>
 <div class="controls">
-        <button id="toggleVideo"><i class="fas fa-video"></i></button>
-        <button id="toggleAudio"><i class="fas fa-microphone"></i></button>
+        <button id="toggleVideo"><i id ="videoIcon" class="fas fa-video" style="color: green;"></i></button>
+        <button id="toggleAudio"><i id = "audioIcon" class="fas fa-microphone" style="color: green;" ></i></button>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
     <script>
@@ -128,10 +141,22 @@
         
                 document.getElementById('toggleVideo').addEventListener('click', () => {
                     localStream.getVideoTracks()[0].enabled = !localStream.getVideoTracks()[0].enabled;
+                    let videoIcon = document.getElementById('videoIcon');
+                    if (localStream.getVideoTracks()[0].enabled) {
+                        videoIcon.style.color = 'green';
+                    } else {
+                        videoIcon.style.color = 'red';
+                    }
                 });
-        
+                
                 document.getElementById('toggleAudio').addEventListener('click', () => {
                     localStream.getAudioTracks()[0].enabled = !localStream.getAudioTracks()[0].enabled;
+                    let audioIcon = document.getElementById('audioIcon');
+                    if (localStream.getAudioTracks()[0].enabled) {
+                        audioIcon.style.color = 'green';
+                    } else {
+                        audioIcon.style.color = 'red';
+                    }
                 });
             })
             .catch(error => {

@@ -31,24 +31,31 @@ namespace lab7.Controllers
                 ViewBag.IsSearch = true;
                 ViewBag.Title = "Search Results";
                 ViewBag.SearchName = searchName;
-                if (searchName.Equals(currentUser.FullName))
-                {
-                    return View(contacts);
-                } ;
+
                 var allContacts = await _addressBookService.GetAllContactsAsync();
                 var filteredContacts = allContacts.Where(c => c.FullName.Contains(searchName)).ToList();
 
                 foreach (var contact in filteredContacts)
                 {
-                    var isInAddressBook = await _addressBookService.IsInAddressBookAsync(currentUser, contact);
-                    contacts.Add(new ContactViewModel
+                    if (!(searchName.Equals(currentUser.FullName) && currentUser.Email.Equals(contact.Email))) 
                     {
-                        Contact = contact,
-                        IsInAddressBook = isInAddressBook
-                    });
+                        var isInAddressBook = await _addressBookService.IsInAddressBookAsync(currentUser, contact);
+                        contacts.Add(new ContactViewModel
+                        {
+                            Contact = contact,
+                            IsInAddressBook = isInAddressBook
+                        });
+                     
+                    } ;
+                    
                 }
 
+                if (contacts.Count == 0)
+                {
+                    return View(contacts);
+                }
                 ViewBag.SearchName = searchName;
+                return View(contacts);
             }
             else
             {

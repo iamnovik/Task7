@@ -2,7 +2,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to VChat</h1>
+<style>
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
+    .welcome-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    .welcome-container h1 {
+        color: #333;
+        font-size: 2.5em;
+    }
+
+    .welcome-container p {
+        color: #666;
+        font-size: 1.2em;
+    }
+</style>
+
+<div class="welcome-container">
+    <h1>Welcome to VChat</h1>
     <p>Chat was created by Novik Vladislav. I hope the experience of using the app will be great.</p>
 </div>

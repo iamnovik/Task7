@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Универ\\6 sem\\СПП\\lab7\\lab7\\wwwroot\\images\\wait.jpg",
+      "PackagePath": "staticwebassets\\images\\wait.jpg"
+    },
+    {
       "Id": "D:\\Универ\\6 sem\\СПП\\lab7\\lab7\\wwwroot\\js\\chat.js",
       "PackagePath": "staticwebassets\\js\\chat.js"
     },

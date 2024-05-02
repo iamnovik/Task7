@@ -48,12 +48,14 @@ connection.on("ReceiveMessage", function (message) {
 
     var messagesList = document.getElementById('messagesList');
     messagesList.appendChild(li);
-
+    messagesList.scrollTop = messagesList.scrollHeight;
     window.scrollTo(0, document.body.scrollHeight);
     
 });
 
 window.onload = function() {
+    var messagesList = document.getElementById("messagesList");
+    messagesList.scrollTop = messagesList.scrollHeight;
     window.scrollTo(0, document.body.scrollHeight);
 }
 

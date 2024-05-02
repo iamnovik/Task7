@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5hUFSJuKeOvRsVTp6aiPTzS3z6hc7wNJvPdwsu8S7D8=",
+  "Hash": "dp2yVRWOpBp8vNXOaBxaG7DPDXeHgHpxhRvr2oRGUMs=",
   "Source": "lab7",
   "BasePath": "_content/lab7",
   "Mode": "Default",
@@ -1231,6 +1231,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Универ\\6 sem\\СПП\\lab7\\lab7\\wwwroot\\images\\wait.jpg",
+      "SourceId": "lab7",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Универ\\6 sem\\СПП\\lab7\\lab7\\wwwroot\\",
+      "BasePath": "_content/lab7",
+      "RelativePath": "images/wait.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\wait.jpg"
     },
     {
       "Identity": "D:\\Универ\\6 sem\\СПП\\lab7\\lab7\\wwwroot\\js\\chat.js",
