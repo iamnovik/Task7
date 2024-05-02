@@ -47,8 +47,7 @@
                                 pc.setLocalDescription(answer);
                                 var chatId = document.getElementById("chatId").value;
                                 var str = JSON.stringify(answer) ;
-                                connection.invoke("Send", JSON.stringify(answer));
-                                //connection.invoke("Send",{id: chatId, message: str} );
+                                connection.invoke("Send",{id: chatId, message: JSON.stringify(answer)} );
                                 messages = [];
                              });
                         }
@@ -75,7 +74,8 @@
                     }
                 };*/
             pc.onicecandidate = ({candidate}) => {
-                connection.invoke("Send", JSON.stringify({ candidate }));
+                connection.invoke("Send", { message: JSON.stringify({ candidate }), id: chatId }).catch(err => console.error(err.toString()));
+  
             };
         
         // Send any ICE candidates to the other peer
@@ -112,8 +112,7 @@
                 pc.createOffer().then((offer) => {
                                             pc.setLocalDescription(offer);
                                             var str = JSON.stringify(offer) ;
-                                            connection.invoke("Send", JSON.stringify(offer));
-                                            //connection.invoke("Send",{id: chatId, message: str});
+                                            connection.invoke("Send",{id: chatId, message: JSON.stringify(offer)});
                                             messages = [];
                                         });
                 // Create and send an offer to the other peer
