@@ -47,7 +47,8 @@
                                 pc.setLocalDescription(answer);
                                 var chatId = document.getElementById("chatId").value;
                                 var str = JSON.stringify(answer) ;
-                                connection.invoke("Send",{id: chatId, message: str} );
+                                connection.invoke("Send", JSON.stringify(answer));
+                                //connection.invoke("Send",{id: chatId, message: str} );
                                 messages = [];
                              });
                         }
@@ -64,7 +65,7 @@
             var chatId = document.getElementById("chatId").value; 
             console.log("Group" + chatId)// Получение tableId из модели
             connection.invoke("JoinChatGroup", chatId).catch(err => console.error(err.toString()));
-            pc.onicecandidate = (event) => {
+            /*pc.onicecandidate = (event) => {
                     if (event.candidate) {
                         let chatId = document.getElementById("chatId").value;
                         console.log("Candidate "+chatId)
@@ -72,8 +73,10 @@
                         connection.invoke("Send", { message: str, id: chatId }).catch(err => console.error(err.toString()));
                         messages = [];
                     }
-                };
-        
+                };*/
+            pc.onicecandidate = ({candidate}) => {
+                connection.invoke("Send", JSON.stringify({ candidate }));
+            };
         
         // Send any ICE candidates to the other peer
             
@@ -109,7 +112,8 @@
                 pc.createOffer().then((offer) => {
                                             pc.setLocalDescription(offer);
                                             var str = JSON.stringify(offer) ;
-                                            connection.invoke("Send",{id: chatId, message: str});
+                                            connection.invoke("Send", JSON.stringify(offer));
+                                            //connection.invoke("Send",{id: chatId, message: str});
                                             messages = [];
                                         });
                 // Create and send an offer to the other peer
