@@ -4,11 +4,11 @@ namespace lab7.Controllers;
 
 public class WebRTCHub : Hub
 {
-    public async Task Send(string message)
+    /*public async Task Send(string message)
     {
         System.Console.WriteLine(" send");
         await Clients.Others.SendAsync("Receive", message);
-    }
+    }*/
     
     public async Task Send(Data data)
     {
